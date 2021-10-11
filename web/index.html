@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cifrar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/validar.js"></script>
+</head>
+<body background="./multimedia/267464-werecat.jpg">
+    <header class="header">
+        <div class="cabecera logo-container">
+            Cifrado AES Gutierrez Bueno Elizabeth Andrea - Vasco Giraldo Juan Esteban (5IV7)
+        </div>
+    </header> 
+    <section class="main">
+        <center><h1>Cifrar Con algoritmo AES</h1></center>
+        <form action="cifrar" method="POST" name="formulario">
+            <div class="contenedor" >
+                <p><h3>Ingrese El texto que desea Cifrar</h3></p>
+                <br>
+                <textarea id="cadena" name="cadena" cols="30" rows="10" maxlength="100" class="texto" ></textarea>
+                <br>
+                <br>
+                <center><h3>Escoge EL tipo de Llave que Deseas para el cifrado</h3></center>
+                <label class="radio"><input type="radio" name ="tipo" value="128" checked>128 Bits (16 Caracteres)</label>
+                <br>
+                <br>
+                <label class="radio"><input type="radio" name ="tipo" value="192">192 Bits (24 Caracteres)</label>
+                <br>
+                <br>
+                <label class="radio"><input type="radio" name ="tipo" value="256">256 Bits (32 Caracteres)</label>
+                <br>
+                <br>
+                <input type="text" id="llave" name="llave" maxlength="32" minlength="16" class="llave" placeholder="Introduzca la llave">
+                <br>
+                <br>
+                <button type="button" onclick="Cifrar()" class="boton">Cifrar</button>
+                <br>
+                <br>
+            </div>
+        </form>
+    </section>
+</body>
+</html>
