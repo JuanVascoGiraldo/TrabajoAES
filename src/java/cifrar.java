@@ -1,13 +1,22 @@
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
-
+@WebServlet("/ProcesoArchivo")
+@MultipartConfig
 public class cifrar extends HttpServlet {
 
     /**
@@ -23,7 +32,14 @@ public class cifrar extends HttpServlet {
             throws ServletException, IOException {
         String tipo = request.getParameter("tipo");
         String llave = request.getParameter("llave");
-        String cadena = request.getParameter("cadena");
+        InputStream inputStream = null;
+        Part filePart = request.getPart("file_2");
+            if (filePart.getSize() > 0) {
+                inputStream = filePart.getInputStream();
+            }
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        Stream<String> streamOfString= new BufferedReader(inputStreamReader).lines();
+        String streamToString = streamOfString.collect(Collectors.joining());
         String textocifrado = "";
         int seguir = 0;
         if(tipo.equals("128")){
@@ -35,9 +51,10 @@ public class cifrar extends HttpServlet {
         }
         if(seguir != 0){
             try{
-                textocifrado = CodigoCifrar.encrypt(cadena, llave);
+                textocifrado = CodigoCifrar.encrypt(streamToString, llave);
             }catch(Exception e){
                 System.out.println(e.getMessage());
+                response.sendRedirect("index.html");
                 }
             PrintWriter bufferr = response.getWriter(); 
             String filename = "AESCifrado.txt";
@@ -45,7 +62,6 @@ public class cifrar extends HttpServlet {
             response.setHeader("Content-Disposition","attachment; filename=\"" + filename + "\"");
             bufferr.write(textocifrado);
             bufferr.close();
-            response.sendRedirect("index.html");
         }else{
             response.sendRedirect("index.html");
         }

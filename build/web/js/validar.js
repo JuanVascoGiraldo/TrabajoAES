@@ -1,8 +1,7 @@
 function Cifrar(){
    var radio = document.formulario.tipo.value;
    var key = document.formulario.llave.value;
-   var cadena = document.formulario.cadena.value;
-    if(cadena.length != 0 && key.length != 0){
+    if(key.length != 0){
         if(radio == "128"){
             if(key.length == 16){
                 document.formulario.submit();
